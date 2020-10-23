@@ -1,17 +1,25 @@
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 
+import 'MainPage.dart';
+
 class SignInPage extends StatelessWidget {
+  String _username, _password;
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade900,
+      backgroundColor: Colors.grey.shade800,
       body: Form(
+        key: formKey,
+        autovalidate: true,
         child: ListView(
           children: [
             Icon(
               Icons.account_circle,
               size: 250,
-              color: Colors.grey.shade500,
+              color: Colors.red.shade700,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -36,12 +44,16 @@ class SignInPage extends StatelessWidget {
                     labelStyle: TextStyle(
                       color: Colors.white,
                     )),
+                validator: (girilen) => null,
+                onSaved: (value) => _username = value,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                keyboardType: TextInputType.visiblePassword,
                 cursorColor: Colors.white,
+                obscureText: true,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -60,16 +72,44 @@ class SignInPage extends StatelessWidget {
                     labelStyle: TextStyle(
                       color: Colors.white,
                     )),
+                validator: (girilen) => null,
+                onSaved: (value) => _password = value,
               ),
             ),
-            RaisedButton(
-              child: Text("Giriş Yap"),
-              onPressed: () {},
-              padding: EdgeInsets.all(8.0),
-            )
+            Padding(
+              padding: EdgeInsets.only(left: 100, right: 100, top: 20),
+              child: RaisedButton(
+                child: Text("Giriş Yap"),
+                onPressed: () {
+                  _SignIn(context);
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _SignIn(BuildContext context) {
+    String username = "bilalozcan";
+    String password = "123456";
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      debugPrint("Username: $_username, Password: $_password");
+      if (_username != username && _password != password) {
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => AlertDialog(
+              backgroundColor: Colors.red,
+              content: Text("Kullanıcı adı veya şifre yanlış!"),
+            ));
+
+      }else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
+    }
   }
 }
