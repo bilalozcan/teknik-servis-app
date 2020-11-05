@@ -23,7 +23,6 @@ class _SignInPageState extends State<SignInPage> {
   void initState() {
     // TODO: implement initState
     _prefs.then((SharedPreferences prefs) => null);
-    checkUser();
     super.initState();
   }
 
@@ -31,15 +30,6 @@ class _SignInPageState extends State<SignInPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-  }
-
-  void checkUser() async {
-    final SharedPreferences prefs = await _prefs;
-    if (prefs.getString("username") == "bilalozcan" &&
-        prefs.getString("password") == "123456") {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
-    }
   }
 
   @override

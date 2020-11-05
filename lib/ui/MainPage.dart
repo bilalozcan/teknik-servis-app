@@ -1,6 +1,11 @@
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:teknik_servis/model/Document.dart';
+import 'package:teknik_servis/ui/SelectPrinterPage.dart';
 import 'package:teknik_servis/utils/DatabaseHelper.dart';
+import 'package:toast/toast.dart';
+import 'HistoryDocumentsPage.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -8,10 +13,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  DatabaseHelper db1;
+  DatabaseHelper _databaseHelper;
   List<Document> tumDokumanListesi;
   final formKey = GlobalKey<FormState>();
+  String initvalue = null;
   String currentvalue = null;
+  bool autovalidateVal;
+  bool autofocusVal = false;
   String _marka,
       _servisAdi,
       _servisTel,
@@ -28,21 +36,22 @@ class _MainPageState extends State<MainPage> {
       _yapilanIs,
       _aciklama,
       _ucret;
-  bool chechBoxValue = false;
+  bool checkBoxValue = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    autovalidateVal = false;
     tumDokumanListesi = List<Document>();
-    db1 = DatabaseHelper();
+    _databaseHelper = DatabaseHelper();
     //Yerel Veritabanından veri çekme işlemi
-    db1.allDocument().then((allDocumentMapList) {
+    _databaseHelper.allDocument().then((allDocumentMapList) {
       for (Map docMap in allDocumentMapList) {
         tumDokumanListesi.add(Document.fromMap(docMap));
       }
     });
-    for(Document docMap in tumDokumanListesi){
+    for (Document docMap in tumDokumanListesi) {
       debugPrint(docMap.toString());
     }
   }
@@ -52,17 +61,40 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black54,
-        title: Text("SM Teknik Servis"),
-        leading: Icon(Icons.print),
-        actions: [
-          Icon(
-            Icons.history,
+        title: Text("Teknik Servis"),
+        leading: GestureDetector(
+          child: Icon(
+            Icons.print,
             size: 36,
-          )
+          ),
+          onLongPress: () => Toast.show(
+            "Önizle",
+            context,
+            duration: 3,
+          ),
+          onTap: () => _preview(false),
+        ),
+        actions: [
+          GestureDetector(
+            child: Icon(
+              Icons.history,
+              size: 36,
+            ),
+            onLongPress: () => Toast.show(
+              "Önceki Dökümanları Görüntüle",
+              context,
+              duration: 3,
+            ),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HistoryDocumentsPage())),
+          ),
         ],
         centerTitle: true,
       ),
       body: Form(
+        autovalidate: true,
         key: formKey,
         child: ListView(
           children: [
@@ -76,13 +108,13 @@ class _MainPageState extends State<MainPage> {
                     children: [
                       Container(
                         child: DropdownButton<String>(
-                          iconEnabledColor: Colors.pink,
-                          dropdownColor: Colors.pink,
-                          iconDisabledColor: Colors.blue,
+                          iconEnabledColor: Colors.white,
+                          dropdownColor: Colors.grey.shade800,
+                          iconDisabledColor: Colors.white,
                           focusColor: Colors.green,
                           style: TextStyle(
-                              color: Colors.cyanAccent,
-                              decorationColor: Colors.amber),
+                              color: Colors.white,
+                              decorationColor: Colors.white),
                           items: [
                             DropdownMenuItem<String>(
                                 child: Text("Vaillant"), value: "Vaillant"),
@@ -121,7 +153,10 @@ class _MainPageState extends State<MainPage> {
                               currentvalue = secilen;
                             });
                           },
-                          hint: Text("Marka Seçin"),
+                          hint: Text(
+                            "Marka Seçin",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           value: currentvalue,
                         ),
                       ),
@@ -132,8 +167,10 @@ class _MainPageState extends State<MainPage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                initialValue: initvalue,
                                 autofocus: false,
-                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.text,
                                 cursorColor: Colors.white,
                                 style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -157,8 +194,10 @@ class _MainPageState extends State<MainPage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                initialValue: initvalue,
                                 autofocus: false,
-                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.text,
                                 cursorColor: Colors.white,
                                 style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -187,8 +226,10 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.text,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -210,8 +251,10 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.text,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -233,8 +276,9 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
+                      keyboardType: TextInputType.text,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -256,8 +300,11 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
+                      initialValue: initvalue,
+                      autovalidate: autovalidateVal,
+                      autofocus: autofocusVal,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.phone,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -272,13 +319,14 @@ class _MainPageState extends State<MainPage> {
                           labelStyle: TextStyle(
                             color: Colors.white,
                           )),
-                      validator: (girilen) => null,
+                      validator: _phoneControl,
                       onSaved: (value) => _musteriTel = value,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -302,6 +350,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -325,6 +374,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -348,6 +398,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -371,6 +422,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -394,6 +446,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -417,6 +470,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -440,6 +494,7 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      initialValue: initvalue,
                       autofocus: false,
                       keyboardType: TextInputType.visiblePassword,
                       cursorColor: Colors.white,
@@ -463,8 +518,11 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      autovalidate: false,
+                      initialValue: initvalue,
                       autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -484,33 +542,33 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   CheckboxListTile(
-                    contentPadding: EdgeInsets.fromLTRB(150, 4, 150, 0),
+                    activeColor: Colors.white,
+                    contentPadding: EdgeInsets.fromLTRB(120, 4, 120, 0),
                     isThreeLine: false,
-                    value: chechBoxValue,
+                    value: checkBoxValue,
                     onChanged: (secildi) {
                       setState(() {
-                        chechBoxValue = secildi;
+                        checkBoxValue = secildi;
                       });
                     },
                     title: Text(
                       "Garanti",
                       style: TextStyle(color: Colors.white),
                     ),
-                    checkColor: Colors.white,
+                    checkColor: Colors.grey.shade800,
                   ),
                   RaisedButton(
-                      padding: EdgeInsets.all(20),
-                      child: Container(
-                        width: 250,
-                        height: 15,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [Icon(Icons.print), Icon(Icons.save)],
-                        ),
-                      ),
-                      onPressed: () {
-                        _Kaydet();
-                      })
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      "Önizle ve Yazdır",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey.shade800),
+                    ),
+                    onPressed: () {
+                      _OnizleVeYazdir();
+                    },
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -518,6 +576,10 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
+  }
+
+  void _OnizleVeYazdir() {
+    _preview(true);
   }
 
   void _Kaydet() {
@@ -540,14 +602,147 @@ class _MainPageState extends State<MainPage> {
           _yapilanIs,
           _aciklama,
           _ucret,
-          chechBoxValue.toString());
-      debugPrint(" doc.string:" + doc.toString());
-      db1.addDocument(doc);
+          checkBoxValue.toString());
+      _databaseHelper.addDocument(doc);
 
-      /*debugPrint("SaveButton List len: " + tumDokumanListesi.length.toString());
-      for(Document docMap in tumDokumanListesi){
-        debugPrint("docMap.toString"+ docMap.toString());
-      }*/
+      Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SelectPrinterPage(doc)))
+          .then((initValNull) {
+        setState(() {
+          formKey.currentState.reset();
+          formKey.currentState.deactivate();
+
+          checkBoxValue = false;
+        });
+      });
+    } else {
+      setState(() {
+        autovalidateVal = true;
+        autofocusVal = true;
+      });
+
+      Toast.show(
+        "Lütfen Müşteri Telefon Numarasını Kontrol Ediniz",
+        context,
+      );
     }
+  }
+
+  String _phoneControl(String value) {
+    //String pattern = r'(^[0-9]{10,12}$)';
+    RegExp regExp = new RegExp("(05|5)[0-9][0-9][0-9]([0-9]){6,6}");
+    if (value.length == 0) {
+      return 'Lütfen Telefon Numarası Giriniz';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Geçersiz Telefon Numarası';
+    }
+    return null;
+  }
+
+  void _preview(bool check) {
+    formKey.currentState.save();
+    String logoName;
+
+    if (_marka == null || _marka.toString().toLowerCase() == "demirdöküm")
+      logoName = "demirdokum";
+    else
+      logoName = _marka.toString().toLowerCase();
+
+    print("CheckValue: " + checkBoxValue.toString());
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        content: Builder(
+          builder: (context) {
+            // Get available height and width of the build area of this widget. Make a choice depending on the size.
+            var height = MediaQuery.of(context).size.height;
+            var width = MediaQuery.of(context).size.width;
+
+            return Container(
+              alignment: Alignment.topLeft,
+              height: height,
+              width: width,
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Logo
+                  Image.asset(
+                    "assets/images/" + logoName + ".png",
+                    scale: 0.4,
+                  ),
+                  Text(
+                    _servisAdi,
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    _servisTel,
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(""),
+                  Text("Teknisyen Adi : " + _teknisyenAdi,
+                      textAlign: TextAlign.left),
+                  Text("Tarih : " + _tarih, textAlign: TextAlign.left),
+                  Text(""),
+                  Text("Musteri Bilgileri"),
+                  Text("Ad Soyad : " + _musteriAd, textAlign: TextAlign.left),
+                  Text("Telefon : " + _musteriTel, textAlign: TextAlign.left),
+                  Text("Adres : " + _musteriAdres, textAlign: TextAlign.left),
+                  Text(""),
+                  Text("Cihaz Bilgileri", textAlign: TextAlign.left),
+                  Text("Seri No : " + _cihazSeriNo, textAlign: TextAlign.left),
+                  Text("Model : " + _cihazModel, textAlign: TextAlign.left),
+                  Text("Tip : " + _cihazTip, textAlign: TextAlign.left),
+                  Text(""),
+                  Text("Verilen Hizmetler", textAlign: TextAlign.left),
+                  Text("Parcalar : " + _parcalar, textAlign: TextAlign.left),
+                  Text("Bakim : " + _yapilanBakim, textAlign: TextAlign.left),
+                  Text("Iscilik : " + _yapilanIs, textAlign: TextAlign.left),
+                  Text("Aciklama : " + _aciklama, textAlign: TextAlign.left),
+                  Text("Toplam : " + _ucret, textAlign: TextAlign.center),
+
+                  checkBoxValue == true
+                      ? Text("Parca ve hizmetler 1 yil garantimiz altindadir",
+                          textAlign: TextAlign.left)
+                      : SizedBox(),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [Text("Teknisyen"), Text("Imza")],
+                      ),
+                      Column(
+                        children: [Text("Musteri"), Text("Imza")],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        actions: [
+          check == true
+              ? RaisedButton(
+                  color: Colors.green,
+                  child: Text("Yazdır"),
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                    _Kaydet();
+                  },
+                )
+              : SizedBox(),
+          RaisedButton(
+            color: Colors.red,
+            child: Text("Geri Dön"),
+            onPressed: () => Navigator.pop(context, true),
+          )
+        ],
+      ),
+    );
   }
 }

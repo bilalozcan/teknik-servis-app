@@ -92,7 +92,7 @@ class DatabaseHelper {
     return sonuc;
   }
 
-  Future<int> deleteAllDocument(String id) async {
+  Future<int> deleteAllDocument() async {
     var db = await _getDatabase();
     var sonuc = await db.delete(_documentTable);
     return sonuc;
