@@ -1,11 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:teknik_servis/model/Document.dart';
 import 'package:teknik_servis/ui/SelectPrinterPage.dart';
 import 'package:teknik_servis/utils/DatabaseHelper.dart';
 import 'package:toast/toast.dart';
 import 'HistoryDocumentsPage.dart';
+import 'package:date_format/date_format.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -37,6 +40,9 @@ class _MainPageState extends State<MainPage> {
       _aciklama,
       _ucret;
   bool checkBoxValue = false;
+  DateTime now = DateTime.now();
+  DateTime last = DateTime(DateTime.now().year, DateTime.now().month - 2);
+  DateTime after = DateTime(DateTime.now().year, DateTime.now().month + 2);
 
   @override
   void initState() {
@@ -54,6 +60,7 @@ class _MainPageState extends State<MainPage> {
     for (Document docMap in tumDokumanListesi) {
       debugPrint(docMap.toString());
     }
+    _tarih = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
   }
 
   @override
@@ -249,28 +256,52 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.text,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Tarih",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _tarih = value,
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "  Tarih: ",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                          RaisedButton(
+                            child: Text(
+                              formatDate(
+                                  DateTime.now(), [dd, '-', mm, '-', yyyy]),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.grey.shade700,
+                            onPressed: () {
+                              showDatePicker(
+                                context: context,
+                                initialDate: now,
+                                firstDate: last,
+                                lastDate: after,
+                                builder: (BuildContext context, Widget child) {
+                                  return Theme(
+                                    data: ThemeData.light().copyWith(
+                                      primaryColor: Colors.grey.shade600,
+                                      accentColor: Colors.grey.shade600,
+                                      colorScheme: ColorScheme.light(
+                                          primary: Colors.grey.shade600),
+                                      buttonTheme: ButtonThemeData(
+                                          textTheme: ButtonTextTheme.primary),
+                                    ),
+                                    child: child,
+                                  );
+                                },
+                              ).then((selectDate) {
+                                _tarih = formatDate(
+                                    selectDate, [dd, '-', mm, '-', yyyy]);
+                              });
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -569,6 +600,17 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                   SizedBox(height: 20),
+                  Text(
+                    "Development by Pay-Lee",
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "bilalozcan015@gmail.com",
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -604,7 +646,7 @@ class _MainPageState extends State<MainPage> {
           _ucret,
           checkBoxValue.toString());
       _databaseHelper.addDocument(doc);
-
+      debugPrint("CheckBox Value: " + checkBoxValue.toString());
       Navigator.push(context,
               MaterialPageRoute(builder: (context) => SelectPrinterPage(doc)))
           .then((initValNull) {
@@ -645,10 +687,12 @@ class _MainPageState extends State<MainPage> {
 
     if (_marka == null || _marka.toString().toLowerCase() == "demirdöküm")
       logoName = "demirdokum";
+    else if (_marka == null || _marka.toString().toLowerCase() == "arçelik")
+      logoName = "arcelik";
     else
       logoName = _marka.toString().toLowerCase();
 
-    print("CheckValue: " + checkBoxValue.toString());
+    //print("CheckValue: " + checkBoxValue.toString());
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -672,40 +716,55 @@ class _MainPageState extends State<MainPage> {
                     "assets/images/" + logoName + ".png",
                     scale: 0.4,
                   ),
+                  Text("YETKILI SERVIS", textAlign: TextAlign.center),
+                  Text(""),
                   Text(
-                    _servisAdi,
+                    _servisAdi.toUpperCase(),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    _servisTel,
+                    _servisTel.toUpperCase(),
                     textAlign: TextAlign.center,
                   ),
                   Text(""),
-                  Text("Teknisyen Adi : " + _teknisyenAdi,
+                  Text("Teknisyen Adi : " + _teknisyenAdi.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Tarih : " + _tarih, textAlign: TextAlign.left),
+                  Text("Tarih : " + _tarih.toUpperCase(),
+                      textAlign: TextAlign.left),
                   Text(""),
                   Text("Musteri Bilgileri"),
-                  Text("Ad Soyad : " + _musteriAd, textAlign: TextAlign.left),
-                  Text("Telefon : " + _musteriTel, textAlign: TextAlign.left),
-                  Text("Adres : " + _musteriAdres, textAlign: TextAlign.left),
+                  Text("Ad Soyad : " + _musteriAd.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Telefon : " + _musteriTel.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Adres : " + _musteriAdres.toUpperCase(),
+                      textAlign: TextAlign.left),
                   Text(""),
                   Text("Cihaz Bilgileri", textAlign: TextAlign.left),
-                  Text("Seri No : " + _cihazSeriNo, textAlign: TextAlign.left),
-                  Text("Model : " + _cihazModel, textAlign: TextAlign.left),
-                  Text("Tip : " + _cihazTip, textAlign: TextAlign.left),
+                  Text("Seri No : " + _cihazSeriNo.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Model : " + _cihazModel.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Tip : " + _cihazTip.toUpperCase(),
+                      textAlign: TextAlign.left),
                   Text(""),
                   Text("Verilen Hizmetler", textAlign: TextAlign.left),
-                  Text("Parcalar : " + _parcalar, textAlign: TextAlign.left),
-                  Text("Bakim : " + _yapilanBakim, textAlign: TextAlign.left),
-                  Text("Iscilik : " + _yapilanIs, textAlign: TextAlign.left),
-                  Text("Aciklama : " + _aciklama, textAlign: TextAlign.left),
+                  Text("Parcalar : " + _parcalar.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Bakim : " + _yapilanBakim.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Iscilik : " + _yapilanIs.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("Aciklama : " + _aciklama.toUpperCase(),
+                      textAlign: TextAlign.left),
+                  Text("\n"),
+                  checkBoxValue == true
+                      ? Text("PARCA VE HIZMETLER 1 YIL GARANTIMIZ ALTINDADIR",
+                          textAlign: TextAlign.center)
+                      : SizedBox(),
+                  Text("\n"),
                   Text("Toplam : " + _ucret, textAlign: TextAlign.center),
 
-                  checkBoxValue == true
-                      ? Text("Parca ve hizmetler 1 yil garantimiz altindadir",
-                          textAlign: TextAlign.left)
-                      : SizedBox(),
                   SizedBox(
                     height: 8,
                   ),

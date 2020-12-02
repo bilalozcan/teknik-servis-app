@@ -28,6 +28,7 @@ dependencies:
   path_provider: ^1.6.22
   esc_pos_bluetooth: ^0.2.8
   toast: ^0.1.5
+  date_format: ^1.0.9
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -66,7 +67,6 @@ flutter:
     - assets/images/protherm.png
     - assets/images/vaillant.png
     - assets/images/viessman.png
-    - assets/images/deneme.png
     - assets/images/loading.gif
     - assets/images/loading2.gif
     - assets/images/TeknikServis.png

@@ -21,7 +21,7 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
   Document _document;
   PrinterBluetoothManager _printerManager = PrinterBluetoothManager();
   List<PrinterBluetooth> _devices = [];
-  BluetoothDevice bluetoothDevice = BluetoothDevice();
+  //BluetoothDevice bluetoothDevice = BluetoothDevice();
 
   String _devicesMsg;
 
@@ -75,9 +75,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
     _printerManager.startScan(Duration(seconds: 10));
     _printerManager.scanResults.listen((val) {
       if (!mounted) return;
-      bluetoothDevice.name = "Redmi8";
-      bluetoothDevice.address = "60:AB:67:51:F6:4E";
-      val.add(PrinterBluetooth(bluetoothDevice));
+      //bluetoothDevice.name = "Redmi8";
+      //bluetoothDevice.address = "60:AB:67:51:F6:4E";
+      //val.add(PrinterBluetooth(bluetoothDevice));
       setState(() => _devices = val);
       if (_devices.isEmpty) setState(() => _devicesMsg = "No Devices");
     });
@@ -93,6 +93,90 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
 
   Future<Ticket> _ticket(PaperSize paper) async {
     final ticket = Ticket(paper);
+    var logoName;
+    if (_document.marka == null ||_document.marka.toString().toLowerCase() == "demirdöküm")
+      logoName = "demirdokum";
+    else if (_document.marka == null || _document.marka.toString().toLowerCase() == "arçelik")
+      logoName = "arcelik";
+    else
+      logoName = _document.marka.toString().toLowerCase();
+    // Print image
+    final ByteData data =
+    await rootBundle.load("assets/images/" + logoName + ".png");
+    final Uint8List bytes = data.buffer.asUint8List();
+    final Image image = decodeImage(bytes);
+    ticket.text("");
+    ticket.text("");
+    ticket.image(image, align: PosAlign.center);
+    ticket.text("YETKILI SERVIS", styles: PosStyles(align: PosAlign.center));
+    ticket.text("");
+    ticket.text(_document.servisAdi.toUpperCase(),
+        styles: PosStyles(align: PosAlign.center));
+    ticket.text(_document.servisTel, styles: PosStyles(align: PosAlign.center));
+    ticket.text("");
+    ticket.text("Teknisyen Adi : " + _document.teknisyenAdi.toUpperCase(),
+        styles: PosStyles(
+          align: PosAlign.left,
+        ));
+    ticket.text("Tarih : " + _document.tarih,
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("");
+    ticket.text("");
+    ticket.text("Musteri Bilgileri");
+    ticket.text("Ad Soyad : " + _document.musteriAd.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Telefon : " + _document.musteriTel,
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Adres : " + _document.musteriAdres.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("");
+    ticket.text("");
+    ticket.text("Cihaz Bilgileri");
+    ticket.text("Seri No : " + _document.cihazSeriNo.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Model : " + _document.cihazModel.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Tip : " + _document.cihazTip.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("");
+    ticket.text("");
+    ticket.text("Verilen Hizmetler");
+    ticket.text("Parcalar : " + _document.parcalar.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Bakim : " + _document.yapilanBakim.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Iscilik : " + _document.yapilanIs.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("Aciklama : " + _document.aciklama.toUpperCase(),
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("");
+    if (_document.garanti == "true")
+      ticket.text(
+        "PARCA VE HIZMETLER 1 YIL",
+        styles: PosStyles(align: PosAlign.center,)
+      );
+    ticket.text(
+        "GARANTIMIZ ALTINDADIR",
+        styles: PosStyles(align: PosAlign.center,)
+    );
+    ticket.text("");
+    ticket.text("      Toplam : " + _document.ucret,
+        styles: PosStyles(align: PosAlign.center));
+
+    ticket.text("");
+    ticket.text("     Teknisyen         Musteri",
+        styles: PosStyles(align: PosAlign.left));
+    ticket.text("       Imza             Imza",
+        styles: PosStyles(align: PosAlign.left));
+    ticket.cut();
+    return ticket;
+  }
+
+  Future<void> documentPrint(Ticket ticket) async {
+
+  }
+
+  Future<void> testModePrint(Ticket ticket) async {
     String na = "TEST_MODE";
     //var logoName = _document.marka.toString().toLowerCase();
     // Print image
@@ -102,7 +186,8 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
     ticket.image(image, align: PosAlign.center);
     ticket.text(_document.servisAdi, styles: PosStyles(align: PosAlign.center));
     ticket.text(_document.servisTel, styles: PosStyles(align: PosAlign.center));
-    ticket.text("\n");
+    ticket.text("");
+    ticket.text("");
     ticket.text("Teknisyen Adi : " + _document.teknisyenAdi,
         styles: PosStyles(
           align: PosAlign.left,
@@ -124,66 +209,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
     ticket.text("Parcalar : " + na, styles: PosStyles(align: PosAlign.left));
     ticket.text("Bakim : " + na, styles: PosStyles(align: PosAlign.left));
     ticket.text("Iscilik : " + na, styles: PosStyles(align: PosAlign.left));
-    ticket.text("Aciklama : " + na, styles: PosStyles(align: PosAlign.left));
-    ticket.text("Toplam : " + na, styles: PosStyles(align: PosAlign.center));
-    if (_document.garanti == "1")
-      ticket.text(
-        "Parca ve hizmetler 1 yil garantimiz altindadir",
-        styles: PosStyles(align: PosAlign.left, height: PosTextSize.size8),
-        maxCharsPerLine: 100,
-      );
-    ticket.text("Teknisyen \t\t\t Musteri",
+    ticket.text("Aciklama : \n\n" + na,
         styles: PosStyles(align: PosAlign.left));
-    ticket.text("  Imza \t\t\t Imza", styles: PosStyles(align: PosAlign.left));
-    //documentPrint(ticket);
-    ticket.cut();
-    return ticket;
-  }
-
-  Future<void> documentPrint(Ticket ticket) async {
-    var logoName = _document.marka.toString().toLowerCase();
-    // Print image
-    final ByteData data =
-        await rootBundle.load("assets/images/" + logoName + ".png");
-    final Uint8List bytes = data.buffer.asUint8List();
-    final Image image = decodeImage(bytes);
-    ticket.image(image, align: PosAlign.center);
-    ticket.text(_document.servisAdi, styles: PosStyles(align: PosAlign.center));
-    ticket.text(_document.servisTel, styles: PosStyles(align: PosAlign.center));
-    ticket.text("\n");
-    ticket.text("Teknisyen Adi : " + _document.teknisyenAdi,
-        styles: PosStyles(
-          align: PosAlign.left,
-        ));
-    ticket.text("Tarih : " + _document.tarih,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("\n");
-    ticket.text("Musteri Bilgileri");
-    ticket.text("Ad Soyad : " + _document.musteriAd,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Telefon : " + _document.musteriTel,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Adres : " + _document.musteriAdres,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("\n");
-    ticket.text("Cihaz Bilgileri");
-    ticket.text("Seri No : " + _document.cihazSeriNo,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Model : " + _document.cihazModel,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Tip : " + _document.cihazTip,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("\n");
-    ticket.text("Verilen Hizmetler");
-    ticket.text("Parcalar : " + _document.parcalar,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Bakim : " + _document.yapilanBakim,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Iscilik : " + _document.yapilanIs,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Aciklama : " + _document.aciklama,
-        styles: PosStyles(align: PosAlign.left));
-    ticket.text("Toplam : " + _document.ucret,
+    ticket.text("\t\t\tToplam : " + na,
         styles: PosStyles(align: PosAlign.center));
     if (_document.garanti == "1")
       ticket.text(
@@ -191,8 +219,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
         styles: PosStyles(align: PosAlign.left, height: PosTextSize.size8),
         maxCharsPerLine: 100,
       );
-    ticket.text("Teknisyen \t\t\t Musteri",
+    ticket.text("\tTeknisyen \t\t\t Musteri",
         styles: PosStyles(align: PosAlign.left));
-    ticket.text("  Imza \t\t\t Imza", styles: PosStyles(align: PosAlign.left));
+    ticket.text("\t  Imza \t\t\t Imza",
+        styles: PosStyles(align: PosAlign.left));
   }
 }

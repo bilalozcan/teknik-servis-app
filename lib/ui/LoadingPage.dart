@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'MainPage.dart';
@@ -43,6 +45,7 @@ class _LoadingPageState extends State<LoadingPage> {
             Text(
               "Teknik Servis App",
               style: TextStyle(color: Colors.white, fontSize: 50),
+              textAlign: TextAlign.center,
             ),
             Container(
                 width: 230,
@@ -50,7 +53,14 @@ class _LoadingPageState extends State<LoadingPage> {
                 child: Image.asset(
                   "assets/images/TeknikServis.png",
                 )),
-            Image.asset("assets/images/loading2.gif")
+            SizedBox(
+              child: CircularProgressIndicator(
+                  backgroundColor: Colors.red,
+                  value: 40,
+                  valueColor: AlwaysStoppedAnimation(Colors.red)),
+              height: 25,
+              width: 25,
+            )
           ],
         ),
       ),
