@@ -23,22 +23,23 @@ class _MainPageState extends State<MainPage> {
   String currentvalue = null;
   bool autovalidateVal;
   bool autofocusVal = false;
-  String _marka,
-      _servisAdi,
-      _servisTel,
-      _teknisyenAdi,
-      _tarih,
-      _musteriAd,
-      _musteriTel,
-      _musteriAdres,
-      _cihazSeriNo,
-      _cihazModel,
-      _cihazTip,
-      _parcalar,
-      _yapilanBakim,
-      _yapilanIs,
-      _aciklama,
-      _ucret;
+
+  TextEditingController _marka = TextEditingController();
+  TextEditingController _servisAdi = TextEditingController();
+  TextEditingController _servisTel = TextEditingController();
+  TextEditingController _teknisyenAdi = TextEditingController();
+  TextEditingController _tarih = TextEditingController();
+  TextEditingController _musteriAd = TextEditingController();
+  TextEditingController _musteriTel = TextEditingController();
+  TextEditingController _musteriAdres = TextEditingController();
+  TextEditingController _cihazSeriNo = TextEditingController();
+  TextEditingController _cihazModel = TextEditingController();
+  TextEditingController _cihazTip = TextEditingController();
+  TextEditingController _parcalar = TextEditingController();
+  TextEditingController _yapilanBakim = TextEditingController();
+  TextEditingController _yapilanIs = TextEditingController();
+  TextEditingController _aciklama = TextEditingController();
+  TextEditingController _ucret = TextEditingController();
   bool checkBoxValue = false;
   DateTime now = DateTime.now();
   DateTime last = DateTime(DateTime.now().year, DateTime.now().month - 2);
@@ -60,7 +61,7 @@ class _MainPageState extends State<MainPage> {
     for (Document docMap in tumDokumanListesi) {
       debugPrint(docMap.toString());
     }
-    _tarih = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
+    _tarih.text = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
   }
 
   @override
@@ -155,7 +156,7 @@ class _MainPageState extends State<MainPage> {
                                 child: Text("Baykan"), value: "Baykan"),
                           ],
                           onChanged: (String secilen) {
-                            _marka = secilen;
+                            _marka.text = secilen;
                             setState(() {
                               currentvalue = secilen;
                             });
@@ -171,90 +172,16 @@ class _MainPageState extends State<MainPage> {
                         width: 250,
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                initialValue: initvalue,
-                                autofocus: false,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.text,
-                                cursorColor: Colors.white,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    hintStyle: TextStyle(color: Colors.white),
-                                    labelText: "Servis Adı",
-                                    alignLabelWithHint: true,
-                                    labelStyle: TextStyle(
-                                      color: Colors.white,
-                                    )),
-                                validator: (girilen) => null,
-                                onSaved: (value) => _servisAdi = value,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                initialValue: initvalue,
-                                autofocus: false,
-                                textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.text,
-                                cursorColor: Colors.white,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    hintStyle: TextStyle(color: Colors.white),
-                                    labelText: "Servis Telefon Numarası",
-                                    alignLabelWithHint: true,
-                                    labelStyle: TextStyle(
-                                      color: Colors.white,
-                                    )),
-                                validator: (girilen) => null,
-                                onSaved: (value) => _servisTel = value,
-                              ),
-                            ),
+                            textBox(
+                                "Servis Adı", _servisAdi, TextInputType.text),
+                            textBox("Servis Telefon Numarası", _servisTel,
+                                TextInputType.text),
                           ],
                         ),
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.text,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Teknisyen Adı",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _teknisyenAdi = value,
-                    ),
-                  ),
+                  textBox("Teknisyen Adı", _teknisyenAdi, TextInputType.text),
                   Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     child: Container(
@@ -270,7 +197,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           RaisedButton(
                             child: Text(
-                              _tarih,
+                              _tarih.text,
                               style: TextStyle(color: Colors.white),
                             ),
                             color: Colors.grey.shade700,
@@ -295,10 +222,9 @@ class _MainPageState extends State<MainPage> {
                                 },
                               ).then((selectDate) {
                                 setState(() {
-                                  _tarih = formatDate(
+                                  _tarih.text = formatDate(
                                       selectDate, [dd, '-', mm, '-', yyyy]);
                                 });
-
                               });
                             },
                           )
@@ -306,274 +232,18 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.text,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Müşteri Ad Soyad",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _musteriAd = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autovalidate: autovalidateVal,
-                      autofocus: autofocusVal,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.phone,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Müşteri Telefon Numarası",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: _phoneControl,
-                      onSaved: (value) => _musteriTel = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Müşteri Adres",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _musteriAdres = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Cihaz Seri No",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _cihazSeriNo = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Cihaz Model",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _cihazModel = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Cihaz Tipi",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _cihazTip = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Kullanılan Parçalar",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _parcalar = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Yapılan Bakım",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _yapilanBakim = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Yapılan İşçilik",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _yapilanIs = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      initialValue: initvalue,
-                      autofocus: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Açıklama",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _aciklama = value,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      autovalidate: false,
-                      initialValue: initvalue,
-                      autofocus: false,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          hintStyle: TextStyle(color: Colors.white),
-                          labelText: "Ücret",
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      validator: (girilen) => null,
-                      onSaved: (value) => _ucret = value,
-                    ),
-                  ),
+                  textBox("Müşteri Ad Soyad", _musteriAd, TextInputType.text),
+                  textBox("Müşteri Telefon Numarası", _musteriTel,
+                      TextInputType.phone),
+                  textBox("Müşteri Adres", _musteriAdres, TextInputType.text),
+                  textBox("Cihaz Seri No", _cihazSeriNo, TextInputType.text),
+                  textBox("Cihaz Model", _cihazModel, TextInputType.text),
+                  textBox("Cihaz Tipi", _cihazTip, TextInputType.text),
+                  textBox("Kullanılan Parçalar", _parcalar, TextInputType.text),
+                  textBox("Yapılan Bakım", _yapilanBakim, TextInputType.text),
+                  textBox("Yapılan İşçilik", _yapilanIs, TextInputType.text),
+                  textBox("Açıklama", _aciklama, TextInputType.text),
+                  textBox("Ücret", _ucret, TextInputType.text),
                   CheckboxListTile(
                     activeColor: Colors.white,
                     contentPadding: EdgeInsets.fromLTRB(120, 4, 120, 0),
@@ -630,25 +300,24 @@ class _MainPageState extends State<MainPage> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       var doc = Document(
-          _marka,
-          _servisAdi,
-          _servisTel,
-          _teknisyenAdi,
-          _tarih,
-          _musteriAd,
-          _musteriTel,
-          _musteriAdres,
-          _cihazSeriNo,
-          _cihazModel,
-          _cihazTip,
-          _parcalar,
-          _yapilanBakim,
-          _yapilanIs,
-          _aciklama,
-          _ucret,
+          _marka.text,
+          _servisAdi.text,
+          _servisTel.text,
+          _teknisyenAdi.text,
+          _tarih.text,
+          _musteriAd.text,
+          _musteriTel.text,
+          _musteriAdres.text,
+          _cihazSeriNo.text,
+          _cihazModel.text,
+          _cihazTip.text,
+          _parcalar.text,
+          _yapilanBakim.text,
+          _yapilanIs.text,
+          _aciklama.text,
+          _ucret.text,
           checkBoxValue.toString());
       _databaseHelper.addDocument(doc);
-      debugPrint("CheckBox Value: " + checkBoxValue.toString());
       Navigator.push(context,
               MaterialPageRoute(builder: (context) => SelectPrinterPage(doc)))
           .then((initValNull) {
@@ -687,12 +356,14 @@ class _MainPageState extends State<MainPage> {
     formKey.currentState.save();
     String logoName;
 
-    if (_marka == null || _marka.toString().toLowerCase() == "demirdöküm")
+    if (_marka.text == null ||
+        _marka.text.toString().toLowerCase() == "demirdöküm")
       logoName = "demirdokum";
-    else if (_marka == null || _marka.toString().toLowerCase() == "arçelik")
+    else if (_marka.text == null ||
+        _marka.text.toString().toLowerCase() == "arçelik")
       logoName = "arcelik";
     else
-      logoName = _marka.toString().toLowerCase();
+      logoName = _marka.text.toString().toLowerCase();
 
     //print("CheckValue: " + checkBoxValue.toString());
     showDialog(
@@ -721,43 +392,43 @@ class _MainPageState extends State<MainPage> {
                   Text("YETKILI SERVIS", textAlign: TextAlign.center),
                   Text(""),
                   Text(
-                    _servisAdi.toUpperCase(),
+                    _servisAdi.text.toUpperCase(),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    _servisTel.toUpperCase(),
+                    _servisTel.text.toUpperCase(),
                     textAlign: TextAlign.center,
                   ),
                   Text(""),
-                  Text("Teknisyen Adi : " + _teknisyenAdi.toUpperCase(),
+                  Text("Teknisyen Adi : " + _teknisyenAdi.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Tarih : " + _tarih.toUpperCase(),
+                  Text("Tarih : " + _tarih.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text(""),
                   Text("Musteri Bilgileri"),
-                  Text("Ad Soyad : " + _musteriAd.toUpperCase(),
+                  Text("Ad Soyad : " + _musteriAd.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Telefon : " + _musteriTel.toUpperCase(),
+                  Text("Telefon : " + _musteriTel.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Adres : " + _musteriAdres.toUpperCase(),
+                  Text("Adres : " + _musteriAdres.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text(""),
                   Text("Cihaz Bilgileri", textAlign: TextAlign.left),
-                  Text("Seri No : " + _cihazSeriNo.toUpperCase(),
+                  Text("Seri No : " + _cihazSeriNo.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Model : " + _cihazModel.toUpperCase(),
+                  Text("Model : " + _cihazModel.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Tip : " + _cihazTip.toUpperCase(),
+                  Text("Tip : " + _cihazTip.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text(""),
                   Text("Verilen Hizmetler", textAlign: TextAlign.left),
-                  Text("Parcalar : " + _parcalar.toUpperCase(),
+                  Text("Parcalar : " + _parcalar.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Bakim : " + _yapilanBakim.toUpperCase(),
+                  Text("Bakim : " + _yapilanBakim.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Iscilik : " + _yapilanIs.toUpperCase(),
+                  Text("Iscilik : " + _yapilanIs.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Aciklama : " + _aciklama.toUpperCase(),
+                  Text("Aciklama : " + _aciklama.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("\n"),
                   checkBoxValue == true
@@ -765,7 +436,8 @@ class _MainPageState extends State<MainPage> {
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),
-                  Text("Toplam Ucret : " + _ucret + " TL", textAlign: TextAlign.center),
+                  Text("Toplam Ucret : " + _ucret.text + " TL",
+                      textAlign: TextAlign.center),
 
                   SizedBox(
                     height: 15,
@@ -803,6 +475,38 @@ class _MainPageState extends State<MainPage> {
             onPressed: () => Navigator.pop(context, true),
           )
         ],
+      ),
+    );
+  }
+
+  Widget textBox(String label, TextEditingController textEditingController,
+      TextInputType textInputType,
+      {Function validatorValue = null}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: textEditingController,
+        autovalidate: false,
+        initialValue: initvalue,
+        autofocus: false,
+        textInputAction: TextInputAction.done,
+        keyboardType: textInputType,
+        cursorColor: Colors.white,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            enabledBorder:
+                OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+            focusedBorder:
+                OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+            hintStyle: TextStyle(color: Colors.white),
+            labelText: label,
+            alignLabelWithHint: true,
+            labelStyle: TextStyle(
+              color: Colors.white,
+            )),
+        validator: (girilen) => null,
+
       ),
     );
   }
