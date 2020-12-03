@@ -56,7 +56,6 @@ class DatabaseHelper {
   }
 
   Future<void> _createDB(Database db, int version) async {
-    print("Create DB metodu olustu");
     await db.execute(
         "CREATE TABLE $_documentTable ($columnID INTEGER PRIMARY KEY AUTOINCREMENT,"
         " $columnMarka TEXT,"

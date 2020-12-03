@@ -606,7 +606,7 @@ class _MainPageState extends State<MainPage> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "bilalozcan015@gmail.com",
+                    "0537 933 8182",
                     style: TextStyle(color: Colors.white, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
@@ -763,10 +763,10 @@ class _MainPageState extends State<MainPage> {
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),
-                  Text("Toplam : " + _ucret, textAlign: TextAlign.center),
+                  Text("Toplam Ucret : " + _ucret + " TL", textAlign: TextAlign.center),
 
                   SizedBox(
-                    height: 8,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

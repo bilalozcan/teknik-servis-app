@@ -121,11 +121,10 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _SignIn(BuildContext context) async {
-    String username = "bilalozcan";
-    String password = "123456";
+    String username = "teknikservis";
+    String password = "!teknik-051";
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      debugPrint("Username: $_username, Password: $_password");
       if (_username != username || _password != password) {
         showDialog(
             context: context,

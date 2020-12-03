@@ -3,6 +3,8 @@ import 'package:teknik_servis/model/Document.dart';
 import 'package:teknik_servis/utils/DatabaseHelper.dart';
 import 'package:toast/toast.dart';
 
+import 'SelectPrinterPage.dart';
+
 class HistoryDocumentsPage extends StatefulWidget {
   @override
   _HistoryDocumentsPageState createState() => _HistoryDocumentsPageState();
@@ -55,9 +57,6 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
           child: ListView.builder(
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: (){
-                  _preview(_allDocumentList[index]);
-                },
                 child: Card(
                   color: Colors.grey.shade600,
                   child: ListTile(
@@ -78,13 +77,22 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                       onTap: () => _deleteDocument(
                           _allDocumentList[index].id.toString(), index),
                     ),
-                    trailing: Icon(
-                      Icons.print,
-                      color: Colors.white,
-                      size: 36,
+                    trailing: GestureDetector(
+                      child: Icon(
+                        Icons.print,
+                        color: Colors.white,
+                        size: 36,
+                      ),
+                      onTap: () {
+                        _preview(_allDocumentList[index], true);
+                        debugPrint("Print onTap");
+                      },
                     ),
                   ),
                 ),
+                onTap: () {
+                  _preview(_allDocumentList[index], false);
+                },
               );
             },
             itemCount: _allDocumentList.length,
@@ -133,16 +141,18 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
       Toast.show("HATA", context);
     }
   }
-  void _preview(Document document) {
+
+  void _preview(Document document, bool check) {
     String logoName;
 
-    if (document.marka == null || document.marka.toString().toLowerCase() == "demirdöküm")
+    if (document.marka == null ||
+        document.marka.toString().toLowerCase() == "demirdöküm")
       logoName = "demirdokum";
-    else if (document.marka == null || document.marka.toString().toLowerCase() == "arçelik")
+    else if (document.marka == null ||
+        document.marka.toString().toLowerCase() == "arçelik")
       logoName = "arcelik";
     else
       logoName = document.marka.toString().toLowerCase();
-
 
     showDialog(
       context: context,
@@ -211,13 +221,14 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                   Text("\n"),
                   document.garanti == "true"
                       ? Text("PARCA VE HIZMETLER 1 YIL GARANTIMIZ ALTINDADIR",
-                      textAlign: TextAlign.center)
+                          textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),
-                  Text("Toplam : " + document.ucret, textAlign: TextAlign.center),
+                  Text("Toplam Ucret : " + document.ucret + " TL",
+                      textAlign: TextAlign.center),
 
                   SizedBox(
-                    height: 8,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -236,11 +247,23 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
           },
         ),
         actions: [
+          check == true
+              ? RaisedButton(
+                  color: Colors.green,
+                  child: Text("Yazdır"),
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectPrinterPage(document)));
+                  })
+              : SizedBox(),
           RaisedButton(
             color: Colors.red,
             child: Text("Geri Dön"),
             onPressed: () => Navigator.pop(context, true),
-          )
+          ),
         ],
       ),
     );

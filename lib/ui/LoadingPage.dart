@@ -22,8 +22,8 @@ class _LoadingPageState extends State<LoadingPage> {
 
   void checkUser() async {
     final SharedPreferences prefs = await _prefs;
-    if (prefs.getString("username") == "bilalozcan" &&
-        prefs.getString("password") == "123456") {
+    if (prefs.getString("username") == "teknikservis" &&
+        prefs.getString("password") == "!teknik-051") {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => MainPage()));
     } else {

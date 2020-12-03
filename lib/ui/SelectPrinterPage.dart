@@ -160,7 +160,7 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
         styles: PosStyles(align: PosAlign.center,)
     );
     ticket.text("");
-    ticket.text("      Toplam : " + _document.ucret,
+    ticket.text("   Toplam Ucret: " + _document.ucret + " TL",
         styles: PosStyles(align: PosAlign.center));
 
     ticket.text("");
