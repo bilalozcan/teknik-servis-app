@@ -270,8 +270,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           RaisedButton(
                             child: Text(
-                              formatDate(
-                                  DateTime.now(), [dd, '-', mm, '-', yyyy]),
+                              _tarih,
                               style: TextStyle(color: Colors.white),
                             ),
                             color: Colors.grey.shade700,
@@ -295,8 +294,11 @@ class _MainPageState extends State<MainPage> {
                                   );
                                 },
                               ).then((selectDate) {
-                                _tarih = formatDate(
-                                    selectDate, [dd, '-', mm, '-', yyyy]);
+                                setState(() {
+                                  _tarih = formatDate(
+                                      selectDate, [dd, '-', mm, '-', yyyy]);
+                                });
+
                               });
                             },
                           )

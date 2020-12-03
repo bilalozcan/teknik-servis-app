@@ -102,4 +102,9 @@ class DatabaseHelper {
     var sonuc = await db.query(_documentTable, orderBy: '$columnID DESC');
     return sonuc;
   }
+  Future<List<Map<String, dynamic>>> getDocumentWithDate(String date) async {
+    var db = await _getDatabase();
+    var sonuc = await db.query(_documentTable, where: '$columnTarih = ?', whereArgs: [date]);
+    return sonuc;
+  }
 }

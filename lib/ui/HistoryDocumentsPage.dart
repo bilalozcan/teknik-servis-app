@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:teknik_servis/model/Document.dart';
 import 'package:teknik_servis/utils/DatabaseHelper.dart';
@@ -12,21 +13,18 @@ class HistoryDocumentsPage extends StatefulWidget {
 
 class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
   DatabaseHelper _databaseHelper;
-  List<Document> _allDocumentList;
+  List<Document> _documentList;
+  var _tarih;
+  DateTime now = DateTime.now();
+  DateTime last = DateTime(DateTime.now().year - 2, DateTime.now().month);
+  DateTime after = DateTime(DateTime.now().year + 2, DateTime.now().month);
 
   @override
   void initState() {
     super.initState();
+    _tarih = DateTime.now();
     _databaseHelper = DatabaseHelper();
-    _allDocumentList = List<Document>();
-    _databaseHelper.allDocument().then((allDocumentMapList) {
-      for (Map docMap in allDocumentMapList) {
-        _allDocumentList.add(Document.fromMap(docMap));
-      }
-      setState(() {
-        _allDocumentList;
-      });
-    }).catchError((error) => print("Hata" + error));
+    _documentList = List<Document>();
   }
 
   @override
@@ -34,6 +32,70 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          Container(
+            padding: EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 8),
+            width: 105,
+            height: 10,
+            child: RaisedButton(
+              color: Colors.red.shade700,
+              child: Text("Hepsini Göster", style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                _documentList.clear();
+                _databaseHelper.allDocument().then((allDocumentMapList) {
+                  for (Map docMap in allDocumentMapList) {
+                    _documentList.add(Document.fromMap(docMap));
+                  }
+                }).catchError((error) => print("Hata" + error));
+                setState(() {
+                  _documentList;
+                });
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 2, top: 12, bottom: 12),
+            child: RaisedButton(
+              child: Text(formatDate(_tarih, [dd, '-', mm, '-', yyyy])),
+              onPressed: () {
+                showDatePicker(
+                  context: context,
+                  currentDate: _tarih,
+                  initialDate: _tarih,
+                  firstDate: last,
+                  lastDate: after,
+                  builder: (BuildContext context, Widget child) {
+                    return Theme(
+                      data: ThemeData.light().copyWith(
+                        primaryColor: Colors.grey.shade600,
+                        accentColor: Colors.grey.shade600,
+                        colorScheme:
+                            ColorScheme.light(primary: Colors.grey.shade600),
+                        buttonTheme:
+                            ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                      ),
+                      child: child,
+                    );
+                  },
+                ).then((selectDate) {
+                  setState(() {
+                    _tarih = selectDate;
+                    _documentList.clear();
+                    _databaseHelper
+                        .getDocumentWithDate(
+                            formatDate(_tarih, [dd, '-', mm, '-', yyyy]))
+                        .then((allDocumentMapList) {
+                      for (Map docMap in allDocumentMapList) {
+                        _documentList.add(Document.fromMap(docMap));
+                      }
+                      setState(() {
+                        _documentList;
+                      });
+                    }).catchError((error) => print("Hata" + error));
+                  });
+                });
+              },
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(right: 12),
             child: GestureDetector(
@@ -50,7 +112,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
             ),
           ),
         ],
-        title: Text("Önceki Yazdırılanlar"),
+        title: Text("Kayıtlar"),
       ),
       body: Container(
           color: Colors.grey.shade800,
@@ -61,11 +123,11 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                   color: Colors.grey.shade600,
                   child: ListTile(
                     title: Text(
-                      _allDocumentList[index].musteriAd,
+                      _documentList[index].musteriAd,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     subtitle: Text(
-                      _allDocumentList[index].musteriTel,
+                      _documentList[index].musteriTel,
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     leading: GestureDetector(
@@ -75,7 +137,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                         size: 36,
                       ),
                       onTap: () => _deleteDocument(
-                          _allDocumentList[index].id.toString(), index),
+                          _documentList[index].id.toString(), index),
                     ),
                     trailing: GestureDetector(
                       child: Icon(
@@ -84,18 +146,18 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                         size: 36,
                       ),
                       onTap: () {
-                        _preview(_allDocumentList[index], true);
+                        _preview(_documentList[index], true);
                         debugPrint("Print onTap");
                       },
                     ),
                   ),
                 ),
                 onTap: () {
-                  _preview(_allDocumentList[index], false);
+                  _preview(_documentList[index], false);
                 },
               );
             },
-            itemCount: _allDocumentList.length,
+            itemCount: _documentList.length,
           )),
     );
   }
@@ -113,7 +175,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                 await _databaseHelper.deleteAllDocument();
                 Toast.show("Tüm eski kayıtlar silindi", context);
                 setState(() {
-                  _allDocumentList.clear();
+                  _documentList.clear();
                 });
                 Navigator.of(context).pop();
               },
@@ -131,15 +193,33 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
   }
 
   void _deleteDocument(String id, int index) async {
-    var sonuc = await _databaseHelper.deleteDocument(id);
-    if (sonuc == 1) {
-      Toast.show("Bir eski kayıt silindi", context);
-      setState(() {
-        _allDocumentList.removeAt(index);
-      });
-    } else {
-      Toast.show("HATA", context);
-    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Kayıt Silinsin Mi?"),
+          actions: [
+            FlatButton(
+              child: Text("Evet"),
+              onPressed: () async {
+                await _databaseHelper.deleteDocument(id);
+                Toast.show("Kayıt silindi", context);
+                setState(() {
+                  _documentList.removeAt(index);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text("Hayır"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   void _preview(Document document, bool check) {
