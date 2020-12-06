@@ -27,7 +27,6 @@ class _PrinterPageState extends State<PrinterPage> {
   bool _connected = false;
   String pathImage;
 
-  //TestPrint testPrint;
 
   _PrinterPageState(this._document);
 
@@ -36,7 +35,6 @@ class _PrinterPageState extends State<PrinterPage> {
     super.initState();
     initPlatformState();
     initSavetoPath();
-    //testPrint= TestPrint();
   }
 
   initSavetoPath() async {
@@ -219,6 +217,7 @@ class _PrinterPageState extends State<PrinterPage> {
             setState(() => _connected = false);
           });
           setState(() => _connected = true);
+          Toast.show("Bağlanıyor...", context, duration: 4);
         }
       });
     }

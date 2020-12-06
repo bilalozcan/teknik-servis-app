@@ -39,7 +39,6 @@ class _MainPageState extends State<MainPage> {
   TextEditingController _aciklama = TextEditingController();
   TextEditingController _ucret = TextEditingController();
   bool checkBoxValue = false;
-  bool _phoneValidator = false;
   DateTime now = DateTime.now();
   DateTime last = DateTime(DateTime.now().year, DateTime.now().month - 2);
   DateTime after = DateTime(DateTime.now().year, DateTime.now().month + 2);
@@ -48,33 +47,8 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _servisAdi.text = "Sm Teknik";
-    _servisTel.text = "0212 234 5678";
-    _teknisyenAdi.text = "Bilal Ozcan";
-    _musteriAd.text = "Orhan Ulker";
-    _musteriTel.text = "05370508970";
-    _musteriAdres.text =
-        "X Mahallesi Y Sokak Bakirkoy / istanbul XXXXXXXXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYY XXXXXXXXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYY";
-    _cihazSeriNo.text = "451325645321";
-    _cihazModel.text = "Kombi";
-    _cihazTip.text = "kombi";
-    _parcalar.text = "anakart";
-    _yapilanBakim.text = "genel bakim";
-    _yapilanIs.text = "genel bakim ve anakart degisimi";
-    _aciklama.text = "genel bakim ve anakart degisimi";
-    _ucret.text = "103";
-    checkBoxValue = true;
     tumDokumanListesi = List<Document>();
     _databaseHelper = DatabaseHelper();
-    //Yerel Veritabanından veri çekme işlemi
-    _databaseHelper.allDocument().then((allDocumentMapList) {
-      for (Map docMap in allDocumentMapList) {
-        tumDokumanListesi.add(Document.fromMap(docMap));
-      }
-    });
-    for (Document docMap in tumDokumanListesi) {
-      debugPrint(docMap.toString());
-    }
     _tarih.text = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
   }
 
@@ -301,7 +275,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Development by Pay-Lee",
+                      "Pay-Lee Tarafından Geliştirilmiştir",
                       style: TextStyle(color: Colors.white, fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
@@ -322,42 +296,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _OnizleVeYazdir() {
-    var str = "Adres: " +
-        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCC " +
-        "D D D D D D D D D D D D D D D D D D D D D S S S S  A A A V V V V V V V V V V V V V V" +
-        "UUUUUUUUUUUUUUUUUUUUUUUUUU  YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY";
-    int startIndex = 0;
-    int lastIndex = 50;
-    while (true) {
-      if (startIndex < str.length && lastIndex < str.length) {
-        debugPrint("   " +
-            str.substring(startIndex, lastIndex) +
-            " StartIdx: " +
-            startIndex.toString() +
-            " lastInd: " +
-            lastIndex.toString());
-        startIndex += 47;
-        lastIndex += 47;
-      } else if (lastIndex > str.length) {
-        lastIndex = str.length;
-        debugPrint("   " +
-            str.substring(startIndex, lastIndex) +
-            " StartIdx: " +
-            startIndex.toString() +
-            " lastInd: " +
-            lastIndex.toString());
-        startIndex += 50;
-      } else {
-        break;
-      }
-    }
     _preview(true);
   }
 
   void _Kaydet() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      debugPrint("Marka Adi: " + _marka.text);
       var doc = Document(
           _marka.text,
           _servisAdi.text,
@@ -383,7 +327,7 @@ class _MainPageState extends State<MainPage> {
         setState(() {
           formKey.currentState.reset();
           formKey.currentState.deactivate();
-          /*_marka.text = "";
+          _marka.text = "";
           _servisAdi.text = "";
           _servisTel.text = "";
           _teknisyenAdi.text = "";
@@ -399,23 +343,7 @@ class _MainPageState extends State<MainPage> {
           _yapilanIs.text = "";
           _aciklama.text = "";
           _ucret.text = "";
-          checkBoxValue = false;*/
-          _tarih.text = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
-          _servisAdi.text = "Sm Teknik";
-          _servisTel.text = "0212 234 5678";
-          _teknisyenAdi.text = "Bilal Ozcan";
-          _musteriAd.text = "Orhan Ulker";
-          _musteriTel.text = "05370508970";
-          _musteriAdres.text =
-              "X Mahallesi Y Sokak Bakirkoy / istanbul XXXXXXXXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYY XXXXXXXXXXXXXXXXXXXX YYYYYYYYYYYYYYYYYY";
-          _cihazSeriNo.text = "451325645321";
-          _cihazModel.text = "Kombi";
-          _cihazTip.text = "kombi";
-          _parcalar.text = "anakart";
-          _yapilanBakim.text = "genel bakim";
-          _yapilanIs.text = "genel bakim ve anakart degisimi";
-          _aciklama.text = "genel bakim ve anakart degisimi";
-          _ucret.text = "103";
+          checkBoxValue = false;
         });
       });
     } else {
@@ -430,17 +358,10 @@ class _MainPageState extends State<MainPage> {
     //String pattern = r'(^[0-9]{10,12}$)';
     RegExp regExp = new RegExp("(05|5)[0-9][0-9][0-9]([0-9]){6,6}");
     if (value.length == 0) {
-      _phoneValidator = true;
-      debugPrint("if: " + _phoneValidator.toString());
       return 'Lütfen Telefon Numarası Giriniz';
     } else if (!regExp.hasMatch(value)) {
-      _phoneValidator = true;
-      debugPrint("else if: " + _phoneValidator.toString());
       return 'Geçersiz Telefon Numarası';
     }
-
-    _phoneValidator = false;
-    debugPrint("X: " + _phoneValidator.toString());
 
     return null;
   }

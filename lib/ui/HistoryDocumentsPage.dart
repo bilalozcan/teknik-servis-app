@@ -32,27 +32,28 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
       appBar: AppBar(
         actions: [
           Container(
-            padding: EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 8),
-            width: 105,
-            height: 10,
+            padding: EdgeInsets.only(top: 12, bottom: 12, left: 10, right: 2),
+            width: 80,
+            height: 15,
             child: RaisedButton(
               color: Colors.red.shade700,
-              child: Text("Hepsini Göster", style: TextStyle(color: Colors.white),),
-              onPressed: () {
+              child: Text("Hepsini Göster", style: TextStyle(color: Colors.white, fontSize: 10),),
+              onPressed: () async{
                 _documentList.clear();
                 _databaseHelper.allDocument().then((allDocumentMapList) {
                   for (Map docMap in allDocumentMapList) {
                     _documentList.add(Document.fromMap(docMap));
                   }
+                  setState(() {
+                    _documentList;
+                  });
                 }).catchError((error) => print("Hata" + error));
-                setState(() {
-                  _documentList;
-                });
+
               },
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 2, top: 12, bottom: 12),
+            padding: EdgeInsets.only(right: 0, top: 12, bottom: 12, left: 1),
             child: RaisedButton(
               child: Text(formatDate(_tarih, [dd, '-', mm, '-', yyyy])),
               onPressed: () {
@@ -96,7 +97,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 12),
+            padding: EdgeInsets.only(right: 2),
             child: GestureDetector(
               child: Icon(
                 Icons.delete,
@@ -111,7 +112,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
             ),
           ),
         ],
-        title: Text("Kayıtlar"),
+        title: Text("Kayıt"),
       ),
       body: Container(
           color: Colors.grey.shade800,
@@ -146,7 +147,6 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                       ),
                       onTap: () {
                         _preview(_documentList[index], true);
-                        debugPrint("Print onTap");
                       },
                     ),
                   ),
