@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:teknik_servis/model/Document.dart';
 import 'package:teknik_servis/utils/DatabaseHelper.dart';
 import 'package:toast/toast.dart';
-
-import 'SelectPrinterPage.dart';
 import 'PrinterPage.dart';
 
 class HistoryDocumentsPage extends StatefulWidget {
