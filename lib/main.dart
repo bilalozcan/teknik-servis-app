@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teknik_servis/ui/LoadingPage.dart';
-import 'ui/MainPage.dart';
-import 'ui/SignInPage.dart';
 
 SharedPreferences prefs;
 

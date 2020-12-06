@@ -21,7 +21,7 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
   Document _document;
   PrinterBluetoothManager _printerManager = PrinterBluetoothManager();
   List<PrinterBluetooth> _devices = [];
-  //BluetoothDevice bluetoothDevice = BluetoothDevice();
+  BluetoothDevice bluetoothDevice = BluetoothDevice();
 
   String _devicesMsg;
 
@@ -75,9 +75,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
     _printerManager.startScan(Duration(seconds: 10));
     _printerManager.scanResults.listen((val) {
       if (!mounted) return;
-      //bluetoothDevice.name = "Redmi8";
-      //bluetoothDevice.address = "60:AB:67:51:F6:4E";
-      //val.add(PrinterBluetooth(bluetoothDevice));
+      bluetoothDevice.name = "TEST-PRINTER";
+      bluetoothDevice.address = "60:AB:67:51:F6:4E";
+      val.add(PrinterBluetooth(bluetoothDevice));
       setState(() => _devices = val);
       if (_devices.isEmpty) setState(() => _devicesMsg = "No Devices");
     });
@@ -94,9 +94,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
   Future<Ticket> _ticket(PaperSize paper) async {
     final ticket = Ticket(paper);
     var logoName;
-    if (_document.marka == null ||_document.marka.toString().toLowerCase() == "demirdöküm")
+    if (_document.marka == "" ||_document.marka.toString().toLowerCase() == "demirdöküm")
       logoName = "demirdokum";
-    else if (_document.marka == null || _document.marka.toString().toLowerCase() == "arçelik")
+    else if (_document.marka.toString().toLowerCase() == "arçelik")
       logoName = "arcelik";
     else
       logoName = _document.marka.toString().toLowerCase();
@@ -107,8 +107,9 @@ class _SelectPrinterPageState extends State<SelectPrinterPage> {
     final Image image = decodeImage(bytes);
     ticket.text("");
     ticket.text("");
-    ticket.image(image, align: PosAlign.center);
-    ticket.text("YETKILI SERVIS", styles: PosStyles(align: PosAlign.center));
+    ticket.image(image, align: PosAlign.right);
+    //ticket.image(image, align: PosAlign.center);
+    ticket.text("TEKNIK SERVIS", styles: PosStyles(align: PosAlign.center));
     ticket.text("");
     ticket.text(_document.servisAdi.toUpperCase(),
         styles: PosStyles(align: PosAlign.center));

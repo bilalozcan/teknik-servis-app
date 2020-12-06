@@ -30,6 +30,7 @@ dependencies:
   toast: ^0.1.5
   date_format: ^1.0.9
   flutter_launcher_icons: ^0.8.1
+  blue_thermal_printer: ^1.1.1
 
 flutter_icons:
   android: "launcher_icon"
@@ -45,8 +46,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_name: "^0.0.1"
+
 flutter_launcher_name:
-  name: "Teknik Servis"
+  name: "Teknik Servis "
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -76,8 +78,6 @@ flutter:
     - assets/images/protherm.png
     - assets/images/vaillant.png
     - assets/images/viessman.png
-    - assets/images/loading.gif
-    - assets/images/loading2.gif
     - assets/images/TeknikServis.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

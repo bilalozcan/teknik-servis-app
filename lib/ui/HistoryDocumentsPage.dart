@@ -5,6 +5,7 @@ import 'package:teknik_servis/utils/DatabaseHelper.dart';
 import 'package:toast/toast.dart';
 
 import 'SelectPrinterPage.dart';
+import 'PrinterPage.dart';
 
 class HistoryDocumentsPage extends StatefulWidget {
   @override
@@ -257,7 +258,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                     "assets/images/" + logoName + ".png",
                     scale: 0.4,
                   ),
-                  Text("YETKILI SERVIS", textAlign: TextAlign.center),
+                  Text("TEKNIK SERVIS", textAlign: TextAlign.center),
                   Text(""),
                   Text(
                     document.servisAdi.toUpperCase(),
@@ -336,7 +337,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SelectPrinterPage(document)));
+                            builder: (context) => PrinterPage(document)));
                   })
               : SizedBox(),
           RaisedButton(
