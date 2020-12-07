@@ -325,7 +325,7 @@ class _PrinterPageState extends State<PrinterPage> {
             charset: "CP857");
         bluetooth.printCustom("    Telefon: " + _document.musteriTel, 0, 0,
             charset: "CP857");
-        var str = "Adres: " +
+        var adres = "Adres: " +
             _document.musteriAdres
                 .replaceAll(RegExp(r'ğ'), 'g')
                 .replaceAll(RegExp(r'ş'), 's')
@@ -339,16 +339,16 @@ class _PrinterPageState extends State<PrinterPage> {
         int startIndex = 0;
         int lastIndex = 46;
         while (true) {
-          if (startIndex < str.length && lastIndex < str.length) {
+          if (startIndex < adres.length && lastIndex < adres.length) {
             bluetooth.printCustom(
-                "    " + str.substring(startIndex, lastIndex), 0, 0,
+                "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
             startIndex += 46;
             lastIndex += 46;
-          } else if (lastIndex > str.length) {
-            lastIndex = str.length;
+          } else if (lastIndex > adres.length) {
+            lastIndex = adres.length;
             bluetooth.printCustom(
-                "    " + str.substring(startIndex, lastIndex), 0, 0,
+                "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
             startIndex += 46;
           } else {
@@ -438,8 +438,8 @@ class _PrinterPageState extends State<PrinterPage> {
             0,
             0,
             charset: "CP857");
-        bluetooth.printCustom(
-            "    Aciklama: " +
+        String aciklama =
+            "Aciklama: " +
                 _document.aciklama
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
@@ -449,10 +449,26 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
-                    .toUpperCase(),
-            0,
-            0,
-            charset: "CP857");
+                    .toUpperCase();
+        startIndex = 0;
+        lastIndex = 46;
+        while (true) {
+          if (startIndex < aciklama.length && lastIndex < aciklama.length) {
+            bluetooth.printCustom(
+                "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 46;
+            lastIndex += 46;
+          } else if (lastIndex > aciklama.length) {
+            lastIndex = aciklama.length;
+            bluetooth.printCustom(
+                "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 46;
+          } else {
+            break;
+          }
+        }
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         if (_document.garanti == "true") {
