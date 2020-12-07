@@ -277,9 +277,11 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'ğ'), 'g')
                 .replaceAll(RegExp(r'ş'), 's')
                 .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'ç'), 'C')
                 .replaceAll(RegExp(r'İ'), 'I')
                 .replaceAll(RegExp(r'Ğ'), 'G')
                 .replaceAll(RegExp(r'Ş'), 'S')
+                .replaceAll(RegExp(r'Ç'), 'C')
                 .toUpperCase(),
             1,
             1,
@@ -292,9 +294,11 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -310,9 +314,11 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -324,9 +330,11 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'ğ'), 'g')
                 .replaceAll(RegExp(r'ş'), 's')
                 .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'ç'), 'C')
                 .replaceAll(RegExp(r'İ'), 'I')
                 .replaceAll(RegExp(r'Ğ'), 'G')
                 .replaceAll(RegExp(r'Ş'), 'S')
+                .replaceAll(RegExp(r'Ç'), 'C')
                 .toUpperCase();
         int startIndex = 0;
         int lastIndex = 46;
@@ -357,11 +365,13 @@ class _PrinterPageState extends State<PrinterPage> {
             "    Model: " +
                 _document.cihazModel
                     .replaceAll(RegExp(r'ğ'), 'g')
-                    .replaceAll(RegExp(r'ı'), 'i')
-                    .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
+                    .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -372,9 +382,11 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -382,14 +394,16 @@ class _PrinterPageState extends State<PrinterPage> {
         bluetooth.printNewLine();
         bluetooth.printCustom("    Verilen Hizmetler", 0, 0, charset: "CP857");
         bluetooth.printCustom(
-            "    Parçalar: " +
+            "    Parcalar: " +
                 _document.parcalar
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -400,35 +414,41 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
             charset: "CP857");
         bluetooth.printCustom(
-            "    Isçilik: " +
+            "    Iscilik: " +
                 _document.yapilanIs
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
             charset: "CP857");
         bluetooth.printCustom(
-            "    Açiklama: " +
+            "    Aciklama: " +
                 _document.aciklama
                     .replaceAll(RegExp(r'ğ'), 'g')
                     .replaceAll(RegExp(r'ş'), 's')
                     .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'ç'), 'C')
                     .replaceAll(RegExp(r'İ'), 'I')
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
+                    .replaceAll(RegExp(r'Ç'), 'C')
                     .toUpperCase(),
             0,
             0,
@@ -436,7 +456,7 @@ class _PrinterPageState extends State<PrinterPage> {
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         if (_document.garanti == "true") {
-          bluetooth.printCustom("PARÇA VE HIZMETLER 1 YIL", 1, 1,
+          bluetooth.printCustom("PARCA VE HIZMETLER 1 YIL", 1, 1,
               charset: "CP857");
           bluetooth.printCustom("BOYUNCA GARANTIMIZ ALTINDADIR", 1, 1,
               charset: "CP857");
