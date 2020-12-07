@@ -272,7 +272,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                   Text("Tarih : " + document.tarih.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text(""),
-                  Text("Musteri Bilgileri"),
+                  Text("Müsteri Bilgileri"),
                   Text("Ad Soyad : " + document.musteriAd.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("Telefon : " + document.musteriTel.toUpperCase(),
@@ -293,9 +293,9 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                       textAlign: TextAlign.left),
                   Text("Bakim : " + document.yapilanBakim.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Iscilik : " + document.yapilanIs.toUpperCase(),
+                  Text("Isçilik : " + document.yapilanIs.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Aciklama : " + document.aciklama.toUpperCase(),
+                  Text("Açiklama : " + document.aciklama.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("\n"),
                   document.garanti == "true"
@@ -303,7 +303,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),
-                  Text("Toplam Ucret : " + document.ucret + " TL",
+                  Text("Toplam Ücret : " + document.ucret + " TL",
                       textAlign: TextAlign.center),
 
                   SizedBox(
@@ -316,7 +316,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                         children: [Text("Teknisyen"), Text("Imza")],
                       ),
                       Column(
-                        children: [Text("Musteri"), Text("Imza")],
+                        children: [Text("Müsteri"), Text("Imza")],
                       ),
                     ],
                   ),

@@ -418,7 +418,7 @@ class _MainPageState extends State<MainPage> {
                   Text("Tarih : " + _tarih.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text(""),
-                  Text("Musteri Bilgileri"),
+                  Text("Müsteri Bilgileri"),
                   Text("Ad Soyad : " + _musteriAd.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("Telefon : " + _musteriTel.text.toUpperCase(),
@@ -435,13 +435,13 @@ class _MainPageState extends State<MainPage> {
                       textAlign: TextAlign.left),
                   Text(""),
                   Text("Verilen Hizmetler", textAlign: TextAlign.left),
-                  Text("Parcalar : " + _parcalar.text.toUpperCase(),
+                  Text("Parçalar : " + _parcalar.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("Bakim : " + _yapilanBakim.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Iscilik : " + _yapilanIs.text.toUpperCase(),
+                  Text("Isçilik : " + _yapilanIs.text.toUpperCase(),
                       textAlign: TextAlign.left),
-                  Text("Aciklama : " + _aciklama.text.toUpperCase(),
+                  Text("Açiklama : " + _aciklama.text.toUpperCase(),
                       textAlign: TextAlign.left),
                   Text("\n"),
                   checkBoxValue == true
@@ -449,7 +449,7 @@ class _MainPageState extends State<MainPage> {
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),
-                  Text("Toplam Ucret : " + _ucret.text + " TL",
+                  Text("Toplam Ücret : " + _ucret.text + " TL",
                       textAlign: TextAlign.center),
 
                   SizedBox(

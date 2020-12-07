@@ -27,7 +27,6 @@ class _PrinterPageState extends State<PrinterPage> {
   bool _connected = false;
   String pathImage;
 
-
   _PrinterPageState(this._document);
 
   @override
@@ -118,8 +117,7 @@ class _PrinterPageState extends State<PrinterPage> {
                   Text(
                     'Cihaz:',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white
-                    ),
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                   SizedBox(
                     width: 30,
@@ -131,8 +129,7 @@ class _PrinterPageState extends State<PrinterPage> {
                       iconDisabledColor: Colors.white,
                       focusColor: Colors.green,
                       style: TextStyle(
-                          color: Colors.white,
-                          decorationColor: Colors.white),
+                          color: Colors.white, decorationColor: Colors.white),
                       items: _getDeviceItems(),
                       onChanged: (value) => setState(() => _device = value),
                       value: _device,
@@ -179,8 +176,7 @@ class _PrinterPageState extends State<PrinterPage> {
                     sample(pathImage);
                     Toast.show("Yazdırılıyor...", context, duration: 3);
                   },
-                  child:
-                      Text('YAZDIR', style: TextStyle(color: Colors.white)),
+                  child: Text('YAZDIR', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
@@ -194,7 +190,10 @@ class _PrinterPageState extends State<PrinterPage> {
     List<DropdownMenuItem<BluetoothDevice>> items = [];
     if (_devices.isEmpty) {
       items.add(DropdownMenuItem(
-        child: Text('CİHAZ YOK', style: TextStyle(color: Colors.white),),
+        child: Text(
+          'CİHAZ YOK',
+          style: TextStyle(color: Colors.white),
+        ),
       ));
     } else {
       _devices.forEach((device) {
@@ -271,60 +270,184 @@ class _PrinterPageState extends State<PrinterPage> {
         bluetooth.printNewLine();
         bluetooth.printImage(pathImage); //path of your image/logo
         bluetooth.printNewLine();
-        bluetooth.printCustom("TEKNIK SERVIS", 2, 1);
+        bluetooth.printCustom("TEKNIK SERVIS", 2, 1, charset: "CP857");
         bluetooth.printNewLine();
-        bluetooth.printCustom(_document.servisAdi.toUpperCase(), 1, 1);
+        bluetooth.printCustom(
+            _document.servisAdi
+                .replaceAll(RegExp(r'ğ'), 'g')
+                .replaceAll(RegExp(r'ş'), 's')
+                .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'İ'), 'I')
+                .replaceAll(RegExp(r'Ğ'), 'G')
+                .replaceAll(RegExp(r'Ş'), 'S')
+                .toUpperCase(),
+            1,
+            1,
+            charset: "CP857");
         bluetooth.printCustom(_document.servisTel, 1, 1);
         bluetooth.printNewLine();
-//      bluetooth.printImageBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
-        bluetooth.printCustom("    Teknisyen Adi: " + _document.teknisyenAdi.toUpperCase(), 0, 0,);
-        bluetooth.printCustom("    Tarih: " + _document.tarih.toUpperCase(), 0, 0);
+        bluetooth.printCustom(
+            "    Teknisyen Adi: " +
+                _document.teknisyenAdi
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Tarih: " + _document.tarih.toUpperCase(), 0, 0,
+            charset: "CP857");
         bluetooth.printNewLine();
-        bluetooth.printCustom("    Musteri Bilgileri", 0, 0);
-        bluetooth.printCustom("    Ad Soyad: " + _document.musteriAd.toUpperCase(), 0, 0);
-        bluetooth.printCustom("    Telefon: " + _document.musteriTel, 0, 0);
-        var str = "Adres: " + _document.musteriAdres.toUpperCase();
+        bluetooth.printCustom("    Müsteri Bilgileri", 0, 0, charset: "CP857");
+        bluetooth.printCustom(
+            "    Ad Soyad: " +
+                _document.musteriAd
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom("    Telefon: " + _document.musteriTel, 0, 0,
+            charset: "CP857");
+        var str = "Adres: " +
+            _document.musteriAdres
+                .replaceAll(RegExp(r'ğ'), 'g')
+                .replaceAll(RegExp(r'ş'), 's')
+                .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'İ'), 'I')
+                .replaceAll(RegExp(r'Ğ'), 'G')
+                .replaceAll(RegExp(r'Ş'), 'S')
+                .toUpperCase();
         int startIndex = 0;
         int lastIndex = 46;
-        while(true){
-          if(startIndex < str.length && lastIndex < str.length){
-            bluetooth.printCustom("    "+str.substring(startIndex, lastIndex), 0, 0);
+        while (true) {
+          if (startIndex < str.length && lastIndex < str.length) {
+            bluetooth.printCustom(
+                "    " + str.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
             startIndex += 46;
             lastIndex += 46;
-          }else if (lastIndex > str.length){
+          } else if (lastIndex > str.length) {
             lastIndex = str.length;
-            bluetooth.printCustom("    " + str.substring(startIndex, lastIndex), 0, 0);
+            bluetooth.printCustom(
+                "    " + str.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
             startIndex += 46;
-          }else{
+          } else {
             break;
           }
         }
         //bluetooth.printCustom("    Adres: " + _document.musteriAdres.toUpperCase(), 0, 0);
         bluetooth.printNewLine();
-        bluetooth.printCustom("    Cihaz Bilgileri", 0, 0);
-        bluetooth.printCustom("    Seri No: " + _document.cihazSeriNo.toUpperCase(), 0, 0);
-        bluetooth.printCustom("    Model: " + _document.cihazModel.toUpperCase()
-            , 0, 0);
-        bluetooth.printCustom("    Tip: " + _document.cihazTip.toUpperCase(), 0, 0);
-        bluetooth.printNewLine();
-        bluetooth.printCustom("    Verilen Hizmetler", 0, 0);
-        bluetooth.printCustom("    Parcalar: " + _document.parcalar.toUpperCase(), 0, 0);
-        bluetooth.printCustom("    Bakim: " + _document.yapilanBakim.toUpperCase(), 0, 0);
-        bluetooth.printCustom("    Iscilik: " + _document.yapilanIs.toUpperCase(), 0, 0);
+        bluetooth.printCustom("    Cihaz Bilgileri", 0, 0, charset: "CP857");
         bluetooth.printCustom(
-            "    Aciklama: " + _document.aciklama.toUpperCase(), 0, 0);
+            "    Seri No: " + _document.cihazSeriNo.toUpperCase(), 0, 0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Model: " +
+                _document.cihazModel
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Tip: " +
+                _document.cihazTip
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printNewLine();
+        bluetooth.printCustom("    Verilen Hizmetler", 0, 0, charset: "CP857");
+        bluetooth.printCustom(
+            "    Parçalar: " +
+                _document.parcalar
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Bakim: " +
+                _document.yapilanBakim
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Isçilik: " +
+                _document.yapilanIs
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
+        bluetooth.printCustom(
+            "    Açiklama: " +
+                _document.aciklama
+                    .replaceAll(RegExp(r'ğ'), 'g')
+                    .replaceAll(RegExp(r'ş'), 's')
+                    .replaceAll(RegExp(r'ı'), 'i')
+                    .replaceAll(RegExp(r'İ'), 'I')
+                    .replaceAll(RegExp(r'Ğ'), 'G')
+                    .replaceAll(RegExp(r'Ş'), 'S')
+                    .toUpperCase(),
+            0,
+            0,
+            charset: "CP857");
         bluetooth.printNewLine();
         bluetooth.printNewLine();
-        if(_document.garanti == "true"){
-          bluetooth.printCustom("PARCA VE HIZMETLER 1 YIL", 1, 1);
-          bluetooth.printCustom("BOYUNCA GARANTIMIZ ALTINDADIR", 1, 1);
+        if (_document.garanti == "true") {
+          bluetooth.printCustom("PARÇA VE HIZMETLER 1 YIL", 1, 1,
+              charset: "CP857");
+          bluetooth.printCustom("BOYUNCA GARANTIMIZ ALTINDADIR", 1, 1,
+              charset: "CP857");
           bluetooth.printNewLine();
           bluetooth.printNewLine();
         }
-        bluetooth.printCustom("Toplam Ucret: " + _document.ucret + " TL", 0, 1);
+        bluetooth.printCustom("Toplam Ücret: " + _document.ucret + " TL", 0, 1,
+            charset: "CP857");
         bluetooth.printNewLine();
-        bluetooth.printLeftRight("Teknisyen", "Musteri", 0);
-        bluetooth.printLeftRight("  Imza", " Imza ", 0);
+        bluetooth.printLeftRight("Teknisyen", "Müsteri", 0, charset: "CP857");
+        bluetooth.printLeftRight("  Imza", " Imza ", 0, charset: "CP857");
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         bluetooth.printNewLine();
