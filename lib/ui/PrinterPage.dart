@@ -282,6 +282,10 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'Ğ'), 'G')
                 .replaceAll(RegExp(r'Ş'), 'S')
                 .replaceAll(RegExp(r'Ç'), 'C')
+                .replaceAll(RegExp(r'ü'), 'u')
+                .replaceAll(RegExp(r'Ü'), 'U')
+                .replaceAll(RegExp(r'ö'), 'o')
+                .replaceAll(RegExp(r'Ö'), 'O')
                 .toUpperCase(),
             1,
             1,
@@ -299,6 +303,10 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
+                    .replaceAll(RegExp(r'ü'), 'u')
+                    .replaceAll(RegExp(r'Ü'), 'U')
+                    .replaceAll(RegExp(r'ö'), 'o')
+                    .replaceAll(RegExp(r'Ö'), 'O')
                     .toUpperCase(),
             0,
             0,
@@ -319,6 +327,10 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
+                    .replaceAll(RegExp(r'ü'), 'u')
+                    .replaceAll(RegExp(r'Ü'), 'U')
+                    .replaceAll(RegExp(r'ö'), 'o')
+                    .replaceAll(RegExp(r'Ö'), 'O')
                     .toUpperCase(),
             0,
             0,
@@ -335,22 +347,26 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'Ğ'), 'G')
                 .replaceAll(RegExp(r'Ş'), 'S')
                 .replaceAll(RegExp(r'Ç'), 'C')
+                .replaceAll(RegExp(r'ü'), 'u')
+                .replaceAll(RegExp(r'Ü'), 'U')
+                .replaceAll(RegExp(r'ö'), 'o')
+                .replaceAll(RegExp(r'Ö'), 'O')
                 .toUpperCase();
         int startIndex = 0;
-        int lastIndex = 46;
+        int lastIndex = 28;
         while (true) {
           if (startIndex < adres.length && lastIndex < adres.length) {
             bluetooth.printCustom(
                 "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 46;
-            lastIndex += 46;
+            startIndex += 28;
+            lastIndex += 28;
           } else if (lastIndex > adres.length) {
             lastIndex = adres.length;
             bluetooth.printCustom(
                 "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 46;
+            startIndex += 28;
           } else {
             break;
           }
@@ -372,6 +388,10 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
+                    .replaceAll(RegExp(r'ü'), 'u')
+                    .replaceAll(RegExp(r'Ü'), 'U')
+                    .replaceAll(RegExp(r'ö'), 'o')
+                    .replaceAll(RegExp(r'Ö'), 'O')
                     .toUpperCase(),
             0,
             0,
@@ -387,6 +407,10 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
+                    .replaceAll(RegExp(r'ü'), 'u')
+                    .replaceAll(RegExp(r'Ü'), 'U')
+                    .replaceAll(RegExp(r'ö'), 'o')
+                    .replaceAll(RegExp(r'Ö'), 'O')
                     .toUpperCase(),
             0,
             0,
@@ -404,67 +428,113 @@ class _PrinterPageState extends State<PrinterPage> {
                     .replaceAll(RegExp(r'Ğ'), 'G')
                     .replaceAll(RegExp(r'Ş'), 'S')
                     .replaceAll(RegExp(r'Ç'), 'C')
+                    .replaceAll(RegExp(r'ü'), 'u')
+                    .replaceAll(RegExp(r'Ü'), 'U')
+                    .replaceAll(RegExp(r'ö'), 'o')
+                    .replaceAll(RegExp(r'Ö'), 'O')
                     .toUpperCase(),
             0,
             0,
             charset: "CP857");
-        bluetooth.printCustom(
-            "    Bakim: " +
-                _document.yapilanBakim
-                    .replaceAll(RegExp(r'ğ'), 'g')
-                    .replaceAll(RegExp(r'ş'), 's')
-                    .replaceAll(RegExp(r'ı'), 'i')
-                    .replaceAll(RegExp(r'ç'), 'C')
-                    .replaceAll(RegExp(r'İ'), 'I')
-                    .replaceAll(RegExp(r'Ğ'), 'G')
-                    .replaceAll(RegExp(r'Ş'), 'S')
-                    .replaceAll(RegExp(r'Ç'), 'C')
-                    .toUpperCase(),
-            0,
-            0,
-            charset: "CP857");
-        bluetooth.printCustom(
-            "    Iscilik: " +
-                _document.yapilanIs
-                    .replaceAll(RegExp(r'ğ'), 'g')
-                    .replaceAll(RegExp(r'ş'), 's')
-                    .replaceAll(RegExp(r'ı'), 'i')
-                    .replaceAll(RegExp(r'ç'), 'C')
-                    .replaceAll(RegExp(r'İ'), 'I')
-                    .replaceAll(RegExp(r'Ğ'), 'G')
-                    .replaceAll(RegExp(r'Ş'), 'S')
-                    .replaceAll(RegExp(r'Ç'), 'C')
-                    .toUpperCase(),
-            0,
-            0,
-            charset: "CP857");
-        String aciklama =
-            "Aciklama: " +
-                _document.aciklama
-                    .replaceAll(RegExp(r'ğ'), 'g')
-                    .replaceAll(RegExp(r'ş'), 's')
-                    .replaceAll(RegExp(r'ı'), 'i')
-                    .replaceAll(RegExp(r'ç'), 'C')
-                    .replaceAll(RegExp(r'İ'), 'I')
-                    .replaceAll(RegExp(r'Ğ'), 'G')
-                    .replaceAll(RegExp(r'Ş'), 'S')
-                    .replaceAll(RegExp(r'Ç'), 'C')
-                    .toUpperCase();
+        String bakim = "Bakim: " +
+            _document.yapilanBakim
+                .replaceAll(RegExp(r'ğ'), 'g')
+                .replaceAll(RegExp(r'ş'), 's')
+                .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'ç'), 'C')
+                .replaceAll(RegExp(r'İ'), 'I')
+                .replaceAll(RegExp(r'Ğ'), 'G')
+                .replaceAll(RegExp(r'Ş'), 'S')
+                .replaceAll(RegExp(r'Ç'), 'C')
+                .replaceAll(RegExp(r'ü'), 'u')
+                .replaceAll(RegExp(r'Ü'), 'U')
+                .replaceAll(RegExp(r'ö'), 'o')
+                .replaceAll(RegExp(r'Ö'), 'O')
+                .toUpperCase();
         startIndex = 0;
-        lastIndex = 46;
+        lastIndex = 28;
+        while (true) {
+          if (startIndex < bakim.length && lastIndex < bakim.length) {
+            bluetooth.printCustom(
+                "    " + bakim.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 28;
+            lastIndex += 28;
+          } else if (lastIndex > bakim.length) {
+            lastIndex = bakim.length;
+            bluetooth.printCustom(
+                "    " + bakim.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 28;
+          } else {
+            break;
+          }
+        }
+        String iscilik = "Iscilik: " +
+            _document.yapilanIs
+                .replaceAll(RegExp(r'ğ'), 'g')
+                .replaceAll(RegExp(r'ş'), 's')
+                .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'ç'), 'C')
+                .replaceAll(RegExp(r'İ'), 'I')
+                .replaceAll(RegExp(r'Ğ'), 'G')
+                .replaceAll(RegExp(r'Ş'), 'S')
+                .replaceAll(RegExp(r'Ç'), 'C')
+                .replaceAll(RegExp(r'ü'), 'u')
+                .replaceAll(RegExp(r'Ü'), 'U')
+                .replaceAll(RegExp(r'ö'), 'o')
+                .replaceAll(RegExp(r'Ö'), 'O')
+                .toUpperCase();
+
+        startIndex = 0;
+        lastIndex = 28;
+        while (true) {
+          if (startIndex < iscilik.length && lastIndex < iscilik.length) {
+            bluetooth.printCustom(
+                "    " + iscilik.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 28;
+            lastIndex += 28;
+          } else if (lastIndex > iscilik.length) {
+            lastIndex = iscilik.length;
+            bluetooth.printCustom(
+                "    " + iscilik.substring(startIndex, lastIndex), 0, 0,
+                charset: "CP857");
+            startIndex += 28;
+          } else {
+            break;
+          }
+        }
+        String aciklama = "Aciklama: " +
+            _document.aciklama
+                .replaceAll(RegExp(r'ğ'), 'g')
+                .replaceAll(RegExp(r'ş'), 's')
+                .replaceAll(RegExp(r'ı'), 'i')
+                .replaceAll(RegExp(r'ç'), 'C')
+                .replaceAll(RegExp(r'İ'), 'I')
+                .replaceAll(RegExp(r'Ğ'), 'G')
+                .replaceAll(RegExp(r'Ş'), 'S')
+                .replaceAll(RegExp(r'Ç'), 'C')
+                .replaceAll(RegExp(r'ü'), 'u')
+                .replaceAll(RegExp(r'Ü'), 'U')
+                .replaceAll(RegExp(r'ö'), 'o')
+                .replaceAll(RegExp(r'Ö'), 'O')
+                .toUpperCase();
+        startIndex = 0;
+        lastIndex = 28;
         while (true) {
           if (startIndex < aciklama.length && lastIndex < aciklama.length) {
             bluetooth.printCustom(
                 "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 46;
-            lastIndex += 46;
+            startIndex += 28;
+            lastIndex += 28;
           } else if (lastIndex > aciklama.length) {
             lastIndex = aciklama.length;
             bluetooth.printCustom(
                 "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 46;
+            startIndex += 28;
           } else {
             break;
           }
@@ -479,10 +549,10 @@ class _PrinterPageState extends State<PrinterPage> {
           bluetooth.printNewLine();
           bluetooth.printNewLine();
         }
-        bluetooth.printCustom("Toplam Ücret: " + _document.ucret + " TL", 0, 1,
+        bluetooth.printCustom("Toplam Ucret: " + _document.ucret + " TL", 0, 1,
             charset: "CP857");
         bluetooth.printNewLine();
-        bluetooth.printLeftRight("Teknisyen", "Müsteri", 0, charset: "CP857");
+        bluetooth.printLeftRight("Teknisyen", "Musteri", 0, charset: "CP857");
         bluetooth.printLeftRight("  Imza", " Imza ", 0, charset: "CP857");
         bluetooth.printNewLine();
         bluetooth.printNewLine();
