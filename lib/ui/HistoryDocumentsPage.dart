@@ -256,7 +256,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                     "assets/images/" + logoName + ".png",
                     scale: 0.4,
                   ),
-                  Text("TEKNIK SERVIS", textAlign: TextAlign.center),
+                  //Text("TEKNIK SERVIS", textAlign: TextAlign.center),
                   Text(""),
                   Text(
                     document.servisAdi.toUpperCase(),
@@ -299,7 +299,7 @@ class _HistoryDocumentsPageState extends State<HistoryDocumentsPage> {
                       textAlign: TextAlign.left),
                   Text("\n"),
                   document.garanti == "true"
-                      ? Text("PARCA VE HIZMETLER 1 YIL GARANTIMIZ ALTINDADIR",
+                      ? Text("PARCA VE HIZMETLER 6 AY GARANTIMIZ ALTINDADIR",
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),

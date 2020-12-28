@@ -50,6 +50,9 @@ class _MainPageState extends State<MainPage> {
     tumDokumanListesi = List<Document>();
     _databaseHelper = DatabaseHelper();
     _tarih.text = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
+    _servisAdi.text = "ÖZGÜR TEKNİK SERVİS";
+    _servisTel.text = "05352220095";
+    _teknisyenAdi.text = "ÖZGÜR ÖZGÜR";
   }
 
   @override
@@ -426,7 +429,7 @@ class _MainPageState extends State<MainPage> {
                           "assets/images/" + logoName + ".png",
                           scale: 0.4,
                         ),
-                  Text("TEKNIK SERVIS", textAlign: TextAlign.center),
+                  //Text("TEKNIK SERVIS", textAlign: TextAlign.center),
                   Text(""),
                   Text(
                     _servisAdi.text.toUpperCase(),
@@ -469,7 +472,7 @@ class _MainPageState extends State<MainPage> {
                       textAlign: TextAlign.left),
                   Text("\n"),
                   checkBoxValue == true
-                      ? Text("PARCA VE HIZMETLER 1 YIL GARANTIMIZ ALTINDADIR",
+                      ? Text("PARCA VE HIZMETLER 6 AY GARANTIMIZ ALTINDADIR",
                           textAlign: TextAlign.center)
                       : SizedBox(),
                   Text("\n"),

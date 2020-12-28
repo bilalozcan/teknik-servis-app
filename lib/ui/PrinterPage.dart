@@ -270,7 +270,7 @@ class _PrinterPageState extends State<PrinterPage> {
         bluetooth.printNewLine();
         bluetooth.printImage(pathImage); //path of your image/logo
         bluetooth.printNewLine();
-        bluetooth.printCustom("TEKNIK SERVIS", 2, 1, charset: "CP857");
+        //bluetooth.printCustom("TEKNIK SERVIS", 2, 1, charset: "CP857");
         bluetooth.printNewLine();
         bluetooth.printCustom(
             _document.servisAdi
@@ -542,7 +542,7 @@ class _PrinterPageState extends State<PrinterPage> {
         bluetooth.printNewLine();
         bluetooth.printNewLine();
         if (_document.garanti == "true") {
-          bluetooth.printCustom("PARCA VE HIZMETLER 1 YIL", 1, 1,
+          bluetooth.printCustom("PARCA VE HIZMETLER 6 AY", 1, 1,
               charset: "CP857");
           bluetooth.printCustom("BOYUNCA GARANTIMIZ ALTINDADIR", 1, 1,
               charset: "CP857");
