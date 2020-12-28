@@ -50,9 +50,9 @@ class _MainPageState extends State<MainPage> {
     tumDokumanListesi = List<Document>();
     _databaseHelper = DatabaseHelper();
     _tarih.text = formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]);
-    _servisAdi.text = "ÖZGÜR TEKNİK SERVİS";
-    _servisTel.text = "05352220095";
-    _teknisyenAdi.text = "ÖZGÜR ÖZGÜR";
+    _servisAdi.text = "ÇAMLICA TEKNİK SERVİS";
+    _servisTel.text = "05442661543";
+    _teknisyenAdi.text = "VEYSEL BİNGÖL";
   }
 
   @override
