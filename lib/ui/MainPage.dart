@@ -127,6 +127,8 @@ class _MainPageState extends State<MainPage> {
                               DropdownMenuItem<String>(
                                   child: Text("Alarko"), value: "Alarko"),
                               DropdownMenuItem<String>(
+                                  child: Text("Altus"), value: "Altus"),
+                              DropdownMenuItem<String>(
                                   child: Text("Arçelik"), value: "Arçelik"),
                               DropdownMenuItem<String>(
                                   child: Text("Ariston"), value: "Ariston"),
@@ -146,11 +148,33 @@ class _MainPageState extends State<MainPage> {
                               DropdownMenuItem<String>(
                                   child: Text("ECA"), value: "ECA"),
                               DropdownMenuItem<String>(
+                                  child: Text("Electrolux"), value: "Electrolux"),
+                              DropdownMenuItem<String>(
                                   child: Text("Ferroli"), value: "Ferroli"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Hoover"), value: "Hoover"),
+                              DropdownMenuItem<String>(
+                                  child: Text("İndesit"), value: "indesit"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Kumtel"), value: "Kumtel"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Lg"), value: "Lg"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Profilo"), value: "Profilo"),
                               DropdownMenuItem<String>(
                                   child: Text("Protherm"), value: "Protherm"),
                               DropdownMenuItem<String>(
+                                  child: Text("Regal"), value: "Regal"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Samsung"), value: "Samsung"),
+                              DropdownMenuItem<String>(
+                                  child: Text("SEG"), value: "SEG"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Siemens"), value: "Siemens"),
+                              DropdownMenuItem<String>(
                                   child: Text("Vaillant"), value: "Vaillant"),
+                              DropdownMenuItem<String>(
+                                  child: Text("Vestel"), value: "Vestel"),
                               DropdownMenuItem<String>(
                                   child: Text("Viessman"), value: "Viessman"),
                             ],
