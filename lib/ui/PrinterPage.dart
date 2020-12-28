@@ -8,6 +8,11 @@ import 'dart:async';
 import 'package:teknik_servis/model/Document.dart';
 import 'package:toast/toast.dart';
 
+final int mm58 = 28;
+final int mm80 = 46;
+
+final int PRINTER_MOD = mm58;
+
 class PrinterPage extends StatefulWidget {
   Document _document;
 
@@ -353,20 +358,20 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'Ö'), 'O')
                 .toUpperCase();
         int startIndex = 0;
-        int lastIndex = 28;
+        int lastIndex = PRINTER_MOD;
         while (true) {
           if (startIndex < adres.length && lastIndex < adres.length) {
             bluetooth.printCustom(
                 "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
-            lastIndex += 28;
+            startIndex += PRINTER_MOD;
+            lastIndex += PRINTER_MOD;
           } else if (lastIndex > adres.length) {
             lastIndex = adres.length;
             bluetooth.printCustom(
                 "    " + adres.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
+            startIndex += PRINTER_MOD;
           } else {
             break;
           }
@@ -452,20 +457,20 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'Ö'), 'O')
                 .toUpperCase();
         startIndex = 0;
-        lastIndex = 28;
+        lastIndex = PRINTER_MOD;
         while (true) {
           if (startIndex < bakim.length && lastIndex < bakim.length) {
             bluetooth.printCustom(
                 "    " + bakim.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
-            lastIndex += 28;
+            startIndex += PRINTER_MOD;
+            lastIndex += PRINTER_MOD;
           } else if (lastIndex > bakim.length) {
             lastIndex = bakim.length;
             bluetooth.printCustom(
                 "    " + bakim.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
+            startIndex += PRINTER_MOD;
           } else {
             break;
           }
@@ -487,20 +492,20 @@ class _PrinterPageState extends State<PrinterPage> {
                 .toUpperCase();
 
         startIndex = 0;
-        lastIndex = 28;
+        lastIndex = PRINTER_MOD;
         while (true) {
           if (startIndex < iscilik.length && lastIndex < iscilik.length) {
             bluetooth.printCustom(
                 "    " + iscilik.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
-            lastIndex += 28;
+            startIndex += PRINTER_MOD;
+            lastIndex += PRINTER_MOD;
           } else if (lastIndex > iscilik.length) {
             lastIndex = iscilik.length;
             bluetooth.printCustom(
                 "    " + iscilik.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
+            startIndex += PRINTER_MOD;
           } else {
             break;
           }
@@ -521,20 +526,20 @@ class _PrinterPageState extends State<PrinterPage> {
                 .replaceAll(RegExp(r'Ö'), 'O')
                 .toUpperCase();
         startIndex = 0;
-        lastIndex = 28;
+        lastIndex = PRINTER_MOD;
         while (true) {
           if (startIndex < aciklama.length && lastIndex < aciklama.length) {
             bluetooth.printCustom(
                 "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
-            lastIndex += 28;
+            startIndex += PRINTER_MOD;
+            lastIndex += PRINTER_MOD;
           } else if (lastIndex > aciklama.length) {
             lastIndex = aciklama.length;
             bluetooth.printCustom(
                 "    " + aciklama.substring(startIndex, lastIndex), 0, 0,
                 charset: "CP857");
-            startIndex += 28;
+            startIndex += PRINTER_MOD;
           } else {
             break;
           }

@@ -47,12 +47,6 @@ class _LoadingPageState extends State<LoadingPage> {
               style: TextStyle(color: Colors.white, fontSize: 50),
               textAlign: TextAlign.center,
             ),
-            Container(
-                width: 230,
-                height: 230,
-                child: Image.asset(
-                  "assets/images/TeknikServis.png",
-                )),
             SizedBox(
               child: CircularProgressIndicator(
                   backgroundColor: Colors.red,
